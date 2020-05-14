@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             xmlns:local="clr-namespace:ProjectCaitlin.Views" xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             mc:Ignorable="d"
+             x:Class="ProjectCaitlin.Views.TaskPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{Binding BackgroundColor}">
+    <ContentPage.Content>
+
+        <StackLayout
+                VerticalOptions="StartAndExpand"
+                Margin="0, 40, 0, 0">
+            <StackLayout
+                Orientation="Horizontal"
+                HorizontalOptions="FillAndExpand"
+                Margin="20, 0, 20, 0">
+
+                <!-- BACK ARROW-->
+                <ImageButton
+                            Source="{Binding BackImage}"
+                            BackgroundColor="Transparent"
+                            HeightRequest="25"
+                            WidthRequest="25"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            Clicked="close"/>
+
+                <!-- CURRENT ROUTINE-->
+                <Label
+                        Text="{Binding TopLabel}"
+                        FontSize="30"
+                        HorizontalTextAlignment="Center"
+                        FontAttributes="Bold"
+                        TextColor= "{Binding TitleTextColor}"
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="Center"/>
+
+                <!-- For Spacing the Label -->
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    HeightRequest="25"
+                    WidthRequest="25"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"
+                    />
+
+            </StackLayout>
+            <StackLayout>
+                <StackLayout Margin="20">
+                    <ffimage:CachedImage Source="{Binding TopImage}" WidthRequest="100" HeightRequest="100">
+                        <ffimage:CachedImage.Transformations>
+                            <fftransformations:CircleTransformation/>
+                        </ffimage:CachedImage.Transformations>
+                    </ffimage:CachedImage>
+                </StackLayout>
+                <StackLayout
+                    Orientation="Horizontal"
+                    HorizontalOptions="FillAndExpand"
+                    Padding="10, 0, 10, 0"
+                    IsVisible="false">
+                    <ImageButton Source="waveformicon.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="60" HorizontalOptions="StartAndExpand"/>
+                    <ImageButton Source="moon.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="60" HorizontalOptions="CenterAndExpand"/>
+                    <Button x:Name="next" Text="Start" FontAttributes="Bold" TextColor="White" BackgroundColor="#cef7b5" HorizontalOptions="EndAndExpand"/>
+                </StackLayout>
+            </StackLayout>
+
+            <ScrollView
+                VerticalOptions="FillAndExpand"
+                Padding="0">
+                <StackLayout>
+                    <flv:FlowListView FlowColumnCount="2"
+                        SeparatorVisibility="Default"
+                        HasUnevenRows="False"
+                        RowHeight ="260"
+                        FlowItemsSource="{Binding Items}"
+                        BackgroundColor="{Binding BackgroundColor}">
+
+                        <flv:FlowListView.FlowColumnTemplate>
+                            <DataTemplate>
+
+                                <StackLayout>
+                                    <Frame
+                                    Margin="10"
+                                   Padding="0"
+                                CornerRadius="25">
+                                        <Grid>
+                                            <ImageButton Source="{Binding Source}"
+                                                 Command="{Binding Navigate}"
+                                                 CommandParameter="{Binding NavigateIdx}"
+                                                 VerticalOptions = "FillAndExpand"
+                                                 HorizontalOptions = "FillAndExpand"
+                                                 HeightRequest="200"
+                                                 Aspect = "AspectFill"/>
+                                            <ImageButton x:Name="isComplete" Command="{Binding Navigate}" CommandParameter="{Binding NavigateIdx}" IsVisible="{Binding IsComplete}" Source="greencheckmarkicon.png" HeightRequest="125" WidthRequest="125" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                            <ImageButton x:Name="isInProgress" Command="{Binding Navigate}" CommandParameter="{Binding NavigateIdx}" IsVisible="{Binding IsInProgress}" Source="yellowclockicon.png" HeightRequest="125" WidthRequest="125" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                        </Grid>
+                                    </Frame>
+
+                                    <Label HorizontalOptions="Center" TextColor="{Binding TextColor}" Text="{Binding Text}" HeightRequest="35" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </flv:FlowListView.FlowColumnTemplate>
+                    </flv:FlowListView>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>
